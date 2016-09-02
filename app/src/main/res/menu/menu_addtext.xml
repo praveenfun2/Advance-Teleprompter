@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@android:drawable/ic_menu_save"
+        android:onClick="saveuri"
+        android:title="Save to file"
+        app:showAsAction="always" />
+    <item
+        android:icon="@android:drawable/checkbox_on_background"
+        android:onClick="save"
+        android:title="Continue without saving"
+        app:showAsAction="always" />
+</menu>

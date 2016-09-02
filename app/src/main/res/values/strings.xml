@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Capstone_project</string>
+    <string name="mirror_state">mirror</string>
+    <string name="scroll_mode">scroll</string>
+    <string-array name="scroll_mode">
+        <item>auto</item>
+        <item>speech</item>
+    </string-array>
+    <string name="scroll_interval_auto">scroll_interval_auto</string>
+    <string name="stop_listening_after">stop_listening_after</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
