@@ -9,14 +9,26 @@
         android:id="@+id/choose_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="Choose File"
-        android:fitsSystemWindows="true"/>
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:fitsSystemWindows="true"
+        android:title="Choose File" />
 
     <ListView
         android:id="@+id/listview"
-        android:padding="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/choose_toolbar"/>
+        android:layout_below="@id/choose_toolbar"
+        android:contentDescription="@string/files_list_description" />
+
+    <TextView
+        android:id="@+id/empty_view2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:contentDescription="@string/empty_list_description"
+        android:text="Oops!!! Nothing Here"
+        android:textColor="@color/colorPrimaryDark"
+        android:visibility="gone"/>
 
 </RelativeLayout>

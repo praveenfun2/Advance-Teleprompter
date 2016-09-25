@@ -1,14 +1,29 @@
 <resources>
-    <string name="app_name">Capstone_project</string>
+    <string name="app_name">Advance Teleprompter</string>
     <string name="mirror_state">mirror</string>
     <string name="scroll_mode">scroll</string>
     <string-array name="scroll_mode">
         <item>auto</item>
         <item>speech</item>
     </string-array>
+    <string name="content">content</string>
+    <string name="play_button_title">play button</string>
+    <string name="stop_button_title">stop button</string>
+    <string name="d1">opened drawer</string>
+    <string name="d2">closed drawer</string>
+    <string name="content_list_description">content to scroll</string>
+    <string name="empty_list_description">No content to show</string>
     <string name="scroll_interval_auto">scroll_interval_auto</string>
-    <string name="stop_listening_after">stop_listening_after</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fab_description">options to add content</string>
+    <string name="ads_description">google ads</string>
+    <string name="help">Help</string>
+    <string name="help_text">\u2022 When using speech recognition, try to speak loud &amp; clear.\n\n
+    \u2022 \"Write Custom Text\" allows you to manually write the text you want to display. You may also save it to a file for future use.\n\n
+    \u2022 \"Choose File\" allows you to import a text file to display its content. Use only \".doc\" or \".txt\" files.\n\n
+    \u2022 Since this app is under development please be patient if something is not working &amp; feel free to contact me &amp; suggest changes.\n\n
+    </string>
+    <string name="files_list_description">list of readable files to choose from</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="setting">Settings</string>
 </resources>

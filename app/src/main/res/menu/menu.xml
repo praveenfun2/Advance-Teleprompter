@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:icon="@android:drawable/ic_media_play"
-        android:id="@+id/play_button"
-        android:title="play"
-        android:onClick="play"
+        android:id="@+id/stop_button"
+        android:icon="@android:drawable/radiobutton_on_background"
+        android:title="@string/stop_button_title"
+        android:visible="false"
         app:showAsAction="always" />
     <item
-        android:id="@+id/settings_button"
-        android:title="settings"
-        android:onClick="settings"
-        app:showAsAction="never" />
+        android:id="@+id/play_button"
+        android:icon="@android:drawable/ic_media_play"
+        android:title="@string/play_button_title"
+        app:showAsAction="always" />
 
 </menu>

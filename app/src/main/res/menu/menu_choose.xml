@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@android:drawable/btn_plus"
-        android:onClick="addFile"
-        android:title="add"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="add file"
+        android:id="@+id/addFile"
         app:showAsAction="always" />
 </menu>

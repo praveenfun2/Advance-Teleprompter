@@ -4,6 +4,7 @@
         android:defaultValue="false"
         android:fitsSystemWindows="true"
         android:key="@string/mirror_state"
+        android:contentDescription="Mirror text"
         android:title="Mirror Text" />
     <ListPreference
         android:defaultValue="auto"
@@ -12,16 +13,11 @@
         android:key="@string/scroll_mode"
         android:title="Scroll Mode" />
     <EditTextPreference
+        android:contentDescription="Scroll interval"
         android:defaultValue="3"
         android:key="@string/scroll_interval_auto"
         android:numeric="integer"
         android:summary="scroll automatically after the given time"
         android:title="Scroll interval" />
-    <EditTextPreference
-        android:defaultValue="3"
-        android:key="@string/stop_listening_after"
-        android:numeric="integer"
-        android:summary="Stop listening for speech after given time of inactivity"
-        android:title="Time gap" />
 
 </PreferenceScreen>

@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/save_menuitem"
         android:icon="@android:drawable/ic_menu_save"
-        android:onClick="saveuri"
         android:title="Save to file"
         app:showAsAction="always" />
     <item
+        android:id="@+id/dont_save_menuitem"
         android:icon="@android:drawable/checkbox_on_background"
-        android:onClick="save"
         android:title="Continue without saving"
         app:showAsAction="always" />
 </menu>

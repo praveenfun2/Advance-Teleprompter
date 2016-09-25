@@ -11,12 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:title="AddText" />
+        app:title="AddText"
+        android:background="@color/colorPrimary"/>
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:maxWidth="500dp"
         android:layout_below="@id/addText_toolbar"
         android:layout_margin="@dimen/activity_horizontal_margin" />
 </RelativeLayout>

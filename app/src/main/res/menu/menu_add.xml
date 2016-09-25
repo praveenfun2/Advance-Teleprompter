@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/addText_menuitem"
+        android:title="Write your own text"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/chooseFile_menuitem"
+        android:title="Choose File"
+        app:showAsAction="always" />
+
+</menu>

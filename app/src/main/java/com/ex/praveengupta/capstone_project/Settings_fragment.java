@@ -1,4 +1,4 @@
-package com.example.praveengupta.capstone_project;
+package com.ex.praveengupta.capstone_project;
 
 
 import android.os.Bundle;
