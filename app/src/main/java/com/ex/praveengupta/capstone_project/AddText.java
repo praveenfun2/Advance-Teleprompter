@@ -1,16 +1,21 @@
 package com.ex.praveengupta.capstone_project;
 
-import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ex.praveengupta.capstone_project.providers.MyProvider;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +28,6 @@ import butterknife.ButterKnife;
 public class AddText extends AppCompatActivity implements DialogInterface.OnClickListener {
 
     Intent intent;
-    String file_name;
     AlertDialog dialog;
     @BindView(R.id.editText)
     EditText editText;
@@ -58,6 +62,7 @@ public class AddText extends AppCompatActivity implements DialogInterface.OnClic
                 return true;
             }
             case R.id.dont_save_menuitem: {
+
                 intent.putExtra(getString(R.string.content), editText.getText().toString());
                 setResult(RESULT_OK, intent);
                 finish();
@@ -67,19 +72,58 @@ public class AddText extends AppCompatActivity implements DialogInterface.OnClic
         return false;
     }
 
-    public void save() {
+    public void save(String file_name) {
 
         File file = new File(getFilesDir(), file_name + ".txt");
-        new MyAsync(this, false, editText.getText().toString()).execute(file);
+        new AsyncTask<File, Void, String>() {
+
+            String write;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                write = editText.getText().toString();
+            }
+
+            @Override
+            protected String doInBackground(File... file) {
+                BufferedWriter b = null;
+                try {
+                    b = new BufferedWriter(new FileWriter(file[0]));
+                    b.write(write);
+                    b.close();
+                    Log.d("kk", file[0].getCanonicalPath());
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(MyProvider.Contracts.fileInfo.FILE_NAME, file[0].getName());
+                    contentValues.put(MyProvider.Contracts.fileInfo.FILE_PATH, file[0].getCanonicalPath());
+                    getContentResolver().insert(MyProvider.Contracts.fileInfo.CONTENT_URI, contentValues);
+                    return write;
+
+                } catch (IOException e) {
+                    Log.d("kk", e.toString());
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+
+                Intent intent = new Intent();
+                intent.putExtra(getString(R.string.content), s);
+                setResult(RESULT_OK, intent);
+                finish();
+
+            }
+        }.execute(file);
     }
 
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         if (!isFilenameValid(dialog_editext.getText().toString()))
-            Toast.makeText(AddText.this, "please enter a name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddText.this, "please enter a valid name", Toast.LENGTH_SHORT).show();
         else {
-            file_name = String.valueOf(dialog_editext.getText());
-            save();
+            save(String.valueOf(dialog_editext.getText()));
         }
 
     }
