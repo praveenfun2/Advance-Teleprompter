@@ -52,7 +52,9 @@ public class MainFragment extends Fragment {
     TextView content;
     @BindView(R.id.progress)
     ProgressBar progressBar;
-    int text_margin, j, time_scroll;
+    int text_margin;
+    int j;
+    long time_scroll;
     String temp;
     Layout layout;
     SharedPreferences sharedPreferences;
@@ -190,8 +192,7 @@ public class MainFragment extends Fragment {
                             return v;
                         }
                     });
-                }
-                else if(layout==null){
+                } else if (layout == null) {
                     listView.setAdapter(null);
                     lines.clear();
                 }
@@ -285,7 +286,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        time_scroll = Integer.parseInt(sharedPreferences.getString(getString(R.string.scroll_interval_auto), "-1"));
+        time_scroll = Long.parseLong(sharedPreferences.getString(getString(R.string.scroll_interval_auto), "-1"))*1000;
         mirror = sharedPreferences.getBoolean(getString(R.string.mirror_state), false);
         if (mirror) ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
@@ -381,7 +382,7 @@ public class MainFragment extends Fragment {
                 while (true) {
 
                     try {
-                        Thread.sleep(Long.parseLong(sharedPreferences.getString(getString(R.string.scroll_interval_auto), "auto")) * 1000);
+                        Thread.sleep(time_scroll);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -398,8 +399,8 @@ public class MainFragment extends Fragment {
             protected void onProgressUpdate(Integer... values) {
                 super.onProgressUpdate(values);
                 if (values[0] == lines.size() - 1) onStopScroll();
-                else
-                    listView.smoothScrollToPositionFromTop(values[0] + 1, text_margin);
+                else listView.smoothScrollToPositionFromTop(values[0] + 1, text_margin, (int) time_scroll);
+
             }
         }.execute();
 
