@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                if(slideOffset>0) mAdView.setVisibility(View.INVISIBLE);
+                if (slideOffset > 0) mAdView.setVisibility(View.INVISIBLE);
                 else mAdView.setVisibility(View.VISIBLE);
             }
         };

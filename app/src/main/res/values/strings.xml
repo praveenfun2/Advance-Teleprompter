@@ -13,7 +13,7 @@
     <string name="d2">closed drawer</string>
     <string name="content_list_description">content to scroll</string>
     <string name="empty_list_description">No content to show</string>
-    <string name="scroll_interval_auto">scroll_interval_auto</string>
+    <string name="scroll_speed_auto">scroll_speed_auto</string>
     <string name="fab_description">options to add content</string>
     <string name="ads_description">google ads</string>
     <string name="help">Help</string>

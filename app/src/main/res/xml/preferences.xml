@@ -13,11 +13,11 @@
         android:key="@string/scroll_mode"
         android:title="Scroll Mode" />
     <EditTextPreference
-        android:contentDescription="Scroll interval"
+        android:contentDescription="Scroll Speed"
         android:defaultValue="3"
-        android:key="@string/scroll_interval_auto"
+        android:key="@string/scroll_speed_auto"
         android:numeric="integer"
-        android:summary="scroll automatically after the given time"
-        android:title="Scroll interval" />
+        android:summary="Scrolling speed in lines per second"
+        android:title="Scroll Speed" />
 
 </PreferenceScreen>

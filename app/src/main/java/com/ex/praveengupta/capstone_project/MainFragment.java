@@ -57,7 +57,7 @@ public class MainFragment extends Fragment {
     ProgressBar progressBar;
     int text_margin;
     int j;
-    long time_scroll;
+    int scroll_speed;
     String temp;
     Layout layout;
     SharedPreferences sharedPreferences;
@@ -183,13 +183,12 @@ public class MainFragment extends Fragment {
                                 textView = (TextView) v.findViewById(R.id.textview);
                             } else {
                                 textView = (TextView) v.findViewById(R.id.textview);
-                                ((RelativeLayout.LayoutParams) textView.getLayoutParams()).setMargins(0, 0, 0, 0);
+                                textView.setPadding(0, 0, 0, 0);
                             }
+
                             textView.setText(getItem(i));
-                            if (i == 0)
-                                ((RelativeLayout.LayoutParams) textView.getLayoutParams()).setMargins(0, text_margin, 0, 0);
-                            else if (i == getCount() - 1)
-                                ((RelativeLayout.LayoutParams) textView.getLayoutParams()).setMargins(0, 0, 0, text_margin);
+                            if (i == 0) textView.setPadding(0, text_margin, 0, 0);
+                            else if (i == getCount() - 1) textView.setPadding(0, 0, 0, text_margin);
 
                             if (mirror) textView.setRotationX(180);
                             return v;
@@ -289,7 +288,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        time_scroll = Long.parseLong(sharedPreferences.getString(getString(R.string.scroll_interval_auto), "-1")) * 1000;
+        scroll_speed = Integer.parseInt(sharedPreferences.getString(getString(R.string.scroll_speed_auto), "-1"));
         mirror = sharedPreferences.getBoolean(getString(R.string.mirror_state), false);
         if (mirror && listView.getAdapter() != null)
             ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
@@ -385,17 +384,17 @@ public class MainFragment extends Fragment {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                int i = 0;
+                int i = scroll_speed;
                 while (true) {
 
                     try {
-                        Thread.sleep(time_scroll);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     if (scrolling) {
                         publishProgress(i);
-                        i++;
+                        i += scroll_speed;
                     } else break;
                 }
 
@@ -405,9 +404,11 @@ public class MainFragment extends Fragment {
             @Override
             protected void onProgressUpdate(Integer... values) {
                 super.onProgressUpdate(values);
-                if (values[0] == lines.size() - 1) onStopScroll();
+                if (values[0] >= lines.size() - 1 + scroll_speed) onStopScroll();
+                else if (values[0] > lines.size() - 1)
+                    listView.smoothScrollToPositionFromTop(values[0], text_margin, 1000 * (-values[0] +scroll_speed + lines.size() - 1) / scroll_speed);
                 else
-                    listView.smoothScrollToPositionFromTop(values[0] + 1, text_margin, (int) time_scroll);
+                    listView.smoothScrollToPositionFromTop(values[0], text_margin, 1000);
 
             }
         }.execute();
