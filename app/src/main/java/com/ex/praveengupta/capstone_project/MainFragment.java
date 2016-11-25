@@ -1,9 +1,9 @@
 package com.ex.praveengupta.capstone_project;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,6 +33,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -286,9 +289,10 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        time_scroll = Long.parseLong(sharedPreferences.getString(getString(R.string.scroll_interval_auto), "-1"))*1000;
+        time_scroll = Long.parseLong(sharedPreferences.getString(getString(R.string.scroll_interval_auto), "-1")) * 1000;
         mirror = sharedPreferences.getBoolean(getString(R.string.mirror_state), false);
-        if (mirror) ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
+        if (mirror && listView.getAdapter() != null)
+            ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -333,7 +337,7 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (resultCode == RESULT_OK)
             switch (requestCode) {
                 case FROM_ADD_TEXT: {
@@ -343,15 +347,18 @@ public class MainFragment extends Fragment {
                     break;
                 }
                 case FROM_CHOOSE_FILE: {
-                    new AsyncTask<File, Void, String>() {
+                    new AsyncTask<String, Void, String>() {
                         @Override
-                        protected String doInBackground(File... file) {
+                        protected String doInBackground(String... file) {
 
                             BufferedReader bufferedReader = null;
                             try {
-                                bufferedReader = new BufferedReader(new FileReader(file[0]));
+                                bufferedReader = new BufferedReader(new InputStreamReader(
+                                        getContext().getContentResolver().openInputStream(Uri.parse(file[0]))
+                                ));
                                 String s = "", temp;
                                 while ((temp = bufferedReader.readLine()) != null) s += temp;
+                                Log.d("kk", s);
                                 return s;
                             } catch (IOException e) {
                                 Log.d("kk", e.toString());
@@ -367,7 +374,7 @@ public class MainFragment extends Fragment {
                             content.setText(s);
                             content.requestLayout();
                         }
-                    }.execute(new File(data.getStringExtra("content_add")));
+                    }.execute(data.getStringExtra("content_add"));
                     break;
                 }
             }
@@ -399,7 +406,8 @@ public class MainFragment extends Fragment {
             protected void onProgressUpdate(Integer... values) {
                 super.onProgressUpdate(values);
                 if (values[0] == lines.size() - 1) onStopScroll();
-                else listView.smoothScrollToPositionFromTop(values[0] + 1, text_margin, (int) time_scroll);
+                else
+                    listView.smoothScrollToPositionFromTop(values[0] + 1, text_margin, (int) time_scroll);
 
             }
         }.execute();

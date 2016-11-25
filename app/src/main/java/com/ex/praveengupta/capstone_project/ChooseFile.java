@@ -118,7 +118,9 @@ public class ChooseFile extends AppCompatActivity implements LoaderManager.Loade
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("file/*");
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        intent.putExtra(Intent.CATEGORY_OPENABLE, true);
         startActivityForResult(Intent.createChooser(intent, "MyChooser"), 1);
         return true;
     }
@@ -135,9 +137,9 @@ public class ChooseFile extends AppCompatActivity implements LoaderManager.Loade
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Uri uri = data.getData();
-            if(uri.getLastPathSegment().matches(".*(txt|doc)$")) {
+            if(uri.getLastPathSegment().matches(".*(txt|doc|docx)$")) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(MyProvider.Contracts.fileInfo.FILE_PATH, uri.getPath());
+                contentValues.put(MyProvider.Contracts.fileInfo.FILE_PATH, uri.toString());
                 contentValues.put(MyProvider.Contracts.fileInfo.FILE_NAME, uri.getLastPathSegment());
                 getContentResolver().insert(MyProvider.Contracts.fileInfo.CONTENT_URI, contentValues);
             }

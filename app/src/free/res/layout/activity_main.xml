@@ -15,9 +15,9 @@
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer"
-        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
 
         <RelativeLayout
             android:id="@+id/relative"
@@ -50,11 +50,11 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:contentDescription="@string/ads_description"
+        android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+        ads:adUnitId="@string/ad_unit_id"/>
 </RelativeLayout>

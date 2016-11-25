@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.drawer_list)
     ListView drawer_list;
+    @BindView(R.id.adView)
+    AdView mAdView;
     @BindView(R.id.drawer)
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -86,12 +89,21 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 supportInvalidateOptionsMenu();
+
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
+
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                if(slideOffset>0) mAdView.setVisibility(View.INVISIBLE);
+                else mAdView.setVisibility(View.VISIBLE);
             }
         };
         drawerLayout.addDrawerListener(drawerToggle);
@@ -154,13 +166,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.relative, mainFragment).commit();
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device. e.g.
-        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
+        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_unit_id));
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
     }

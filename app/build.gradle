@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+
 android {
     signingConfigs {
         config {
@@ -9,16 +10,16 @@ android {
             storePassword '159753'
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "com.ex1.praveengupta.capstone_project"
         minSdkVersion 19
-        targetSdkVersion 24
+        targetSdkVersion 25
         multiDexEnabled true
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
     }
     buildTypes {
@@ -41,11 +42,13 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
-    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.android.support:support-v4:25.0.1'
+    freeCompile 'com.google.firebase:firebase-ads:10.0.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    freeCompile 'com.google.android.gms:play-services:9.6.1'
+    freeCompile 'com.google.android.gms:play-services:10.0.0'
 }
+//apply plugin: 'com.google.gms.google-services'
