@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project.providers;
+package com.praveengupta.capstone_project.providers;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -154,7 +154,7 @@ public class MyProvider extends ContentProvider {
 
 
    public static final class Contracts {
-        public static final String AUTHORITY = "com.example.praveengupta.capstone_project";
+        public static final String AUTHORITY = "com.praveengupta.capstone_project";
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
         public static class fileInfo implements BaseColumns {

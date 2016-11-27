@@ -1,10 +1,15 @@
-package com.ex.praveengupta.capstone_project;
+package com.praveengupta.capstone_project;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -14,7 +19,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ActionMode;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +28,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ex.praveengupta.capstone_project.providers.MyProvider;
+import com.praveengupta.capstone_project.providers.MyProvider;
+
+import java.io.FileDescriptor;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+import java.util.jar.Manifest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChooseFile extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
+public class ChooseFile extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     @BindView(R.id.listview)
     ListView listView;
@@ -51,7 +61,8 @@ public class ChooseFile extends AppCompatActivity implements LoaderManager.Loade
         listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
             public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-                if(listView.getCheckedItemCount()!=0) actionMode.setTitle(listView.getCheckedItemCount() + "");
+                if (listView.getCheckedItemCount() != 0)
+                    actionMode.setTitle(listView.getCheckedItemCount() + "");
             }
 
             @Override
@@ -93,6 +104,18 @@ public class ChooseFile extends AppCompatActivity implements LoaderManager.Loade
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+            startActivityForResult(Intent.createChooser(intent, "My Chooser"), 1);
+        }
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,18 +140,23 @@ public class ChooseFile extends AppCompatActivity implements LoaderManager.Loade
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        intent.putExtra(Intent.CATEGORY_OPENABLE, true);
-        startActivityForResult(Intent.createChooser(intent, "MyChooser"), 1);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        else {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+            startActivityForResult(Intent.createChooser(intent, "My Chooser"), 1);
+        }
+
         return true;
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent=new Intent();
-        intent.putExtra("content_add", ((TextView)view.findViewById(R.id.hidden_text)).getText().toString());
+        Intent intent = new Intent();
+        intent.putExtra("content_add", ((TextView) view.findViewById(R.id.hidden_text)).getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -137,13 +165,15 @@ public class ChooseFile extends AppCompatActivity implements LoaderManager.Loade
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Uri uri = data.getData();
-            if(uri.getLastPathSegment().matches(".*(txt|doc|docx)$")) {
+            if (uri.getLastPathSegment().matches(".*(txt|doc|docx)$")) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(MyProvider.Contracts.fileInfo.FILE_PATH, uri.toString());
-                contentValues.put(MyProvider.Contracts.fileInfo.FILE_NAME, uri.getLastPathSegment());
+                String path = Environment.getExternalStorageDirectory() + "/" + DocumentsContract.getDocumentId(uri).split(":", 2)[1];
+                Log.d("kk", path);
+                contentValues.put(MyProvider.Contracts.fileInfo.FILE_PATH, path);
+                contentValues.put(MyProvider.Contracts.fileInfo.FILE_NAME, Uri.parse(path).getLastPathSegment());
                 getContentResolver().insert(MyProvider.Contracts.fileInfo.CONTENT_URI, contentValues);
-            }
-            else Toast.makeText(ChooseFile.this, "Please choose a valid text file", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(ChooseFile.this, "Please choose a valid text file", Toast.LENGTH_SHORT).show();
         } else Log.d("kk", "result not ok");
 
     }

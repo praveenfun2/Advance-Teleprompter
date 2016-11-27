@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project.providers;
+package com.praveengupta.capstone_project.providers;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,15 +8,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
-import com.ex.praveengupta.capstone_project.MainActivity;
-import com.ex.praveengupta.capstone_project.R;
+import com.praveengupta.capstone_project.MainActivity;
+import com.praveengupta.capstone_project.R;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class NewAppWidget extends AppWidgetProvider {
 
-    static String LAUNCH_ACTION="com.ex.praveengupta.capstone_project.LAUNCH";
+    static String LAUNCH_ACTION="com.praveengupta.capstone_project.LAUNCH";
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 

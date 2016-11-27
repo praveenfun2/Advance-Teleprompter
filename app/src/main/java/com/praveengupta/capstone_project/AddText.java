@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project;
+package com.praveengupta.capstone_project;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ex.praveengupta.capstone_project.providers.MyProvider;
+import com.praveengupta.capstone_project.providers.MyProvider;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -92,7 +92,6 @@ public class AddText extends AppCompatActivity implements DialogInterface.OnClic
                     b = new BufferedWriter(new FileWriter(file[0]));
                     b.write(write);
                     b.close();
-                    Log.d("kk", file[0].getCanonicalPath());
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(MyProvider.Contracts.fileInfo.FILE_NAME, file[0].getName());
                     contentValues.put(MyProvider.Contracts.fileInfo.FILE_PATH, file[0].getCanonicalPath());

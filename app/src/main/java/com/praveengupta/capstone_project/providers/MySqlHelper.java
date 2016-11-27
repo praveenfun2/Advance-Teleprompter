@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project.providers;
+package com.praveengupta.capstone_project.providers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

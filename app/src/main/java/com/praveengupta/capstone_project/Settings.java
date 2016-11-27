@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project;
+package com.praveengupta.capstone_project;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

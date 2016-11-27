@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project.providers;
+package com.praveengupta.capstone_project.providers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.ex.praveengupta.capstone_project.R;
+import com.praveengupta.capstone_project.R;
 
 /**
  * Created by Praveen Gupta on 9/7/2016.

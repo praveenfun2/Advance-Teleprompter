@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ex.praveengupta.capstone_project">
+    package="com.praveengupta.capstone_project">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -25,9 +26,9 @@
 
         <provider
             android:name=".providers.MyProvider"
-            android:authorities="com.example.praveengupta.capstone_project"
+            android:authorities="com.praveengupta.capstone_project"
             android:exported="true"
-            android:readPermission="com.example.praveengupta.capstone_project.READ" />
+            android:readPermission="com.praveengupta.capstone_project.READ" />
 
         <receiver android:name=".providers.NewAppWidget">
             <intent-filter>

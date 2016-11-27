@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project;
+package com.praveengupta.capstone_project;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -352,9 +352,7 @@ public class MainFragment extends Fragment {
 
                             BufferedReader bufferedReader = null;
                             try {
-                                bufferedReader = new BufferedReader(new InputStreamReader(
-                                        getContext().getContentResolver().openInputStream(Uri.parse(file[0]))
-                                ));
+                                bufferedReader = new BufferedReader(new FileReader(new File(file[0])));
                                 String s = "", temp;
                                 while ((temp = bufferedReader.readLine()) != null) s += temp;
                                 Log.d("kk", s);

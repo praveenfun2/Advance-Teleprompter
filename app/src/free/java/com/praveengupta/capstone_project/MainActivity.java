@@ -1,4 +1,4 @@
-package com.ex.praveengupta.capstone_project;
+package com.praveengupta.capstone_project;
 
 import android.content.Intent;
 import android.os.AsyncTask;

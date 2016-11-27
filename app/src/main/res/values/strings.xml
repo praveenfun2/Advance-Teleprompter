@@ -19,7 +19,7 @@
     <string name="help">Help</string>
     <string name="help_text">\u2022 When using speech recognition, try to speak loud &amp; clear.\n\n
     \u2022 \"Write Custom Text\" allows you to manually write the text you want to display. You may also save it to a file for future use.\n\n
-    \u2022 \"Choose File\" allows you to import a text file to display its content. Use only \".doc\" or \".txt\" files.\n\n
+    \u2022 \"Choose File\" allows you to import a text file to display its content. Use only \".doc\", \".docx\" or \".txt\" files.\n\n
     \u2022 Since this app is under development please be patient if something is not working &amp; feel free to contact me &amp; suggest changes.\n\n
     </string>
     <string name="files_list_description">list of readable files to choose from</string>
