@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ChooseFile">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/choose_toolbar"
@@ -16,19 +14,19 @@
 
     <ListView
         android:id="@+id/listview"
+        android:layout_below="@id/choose_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/choose_toolbar"
         android:contentDescription="@string/files_list_description" />
 
     <TextView
         android:id="@+id/empty_view2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:contentDescription="@string/empty_list_description"
+        android:gravity="center"
         android:text="Oops!!! Nothing Here"
         android:textColor="@color/colorPrimaryDark"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

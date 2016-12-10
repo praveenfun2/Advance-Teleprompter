@@ -154,14 +154,14 @@ public class MyProvider extends ContentProvider {
 
 
    public static final class Contracts {
-        public static final String AUTHORITY = "com.praveengupta.capstone_project";
-        public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+        static final String AUTHORITY = "com.praveengupta.capstone_project";
+        static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
         public static class fileInfo implements BaseColumns {
-            public static final String TABLE_NAME = "fileInfos";
+            static final String TABLE_NAME = "fileInfos";
             public static final String FILE_NAME = "file_name";
-            public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-            public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/fileInfo";
+            static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+            static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/fileInfo";
             public static final String FILE_PATH = "address";
             public static final Uri CONTENT_URI = Uri.withAppendedPath(Contracts.CONTENT_URI, TABLE_NAME);
         }

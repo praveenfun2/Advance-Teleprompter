@@ -21,6 +21,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +63,6 @@ public class AddText extends AppCompatActivity implements DialogInterface.OnClic
                 return true;
             }
             case R.id.dont_save_menuitem: {
-
                 intent.putExtra(getString(R.string.content), editText.getText().toString());
                 setResult(RESULT_OK, intent);
                 finish();
@@ -83,6 +83,7 @@ public class AddText extends AppCompatActivity implements DialogInterface.OnClic
             protected void onPreExecute() {
                 super.onPreExecute();
                 write = editText.getText().toString();
+                Log.d("kk", write);
             }
 
             @Override

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:defaultValue="auto"
+        android:entries="@array/scroll_mode"
+        android:entryValues="@array/scroll_mode"
+        android:key="@string/scroll_mode"
+        android:title="Scroll Mode" />
+    <EditTextPreference
+        android:contentDescription="Scroll Speed"
+        android:defaultValue="3"
+        android:key="@string/scroll_speed_auto"
+        android:numeric="integer"
+        android:summary="Scrolling speed in lines per second"
+        android:title="Scroll Speed" />
+
+</PreferenceScreen>

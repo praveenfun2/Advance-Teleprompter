@@ -18,8 +18,8 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         multiDexEnabled true
-        versionCode 2
-        versionName "1.1"
+        versionCode 5
+        versionName "1.4"
 
     }
     dexOptions {
@@ -37,7 +37,7 @@ android {
 
         }
         paid {
-
+            applicationIdSuffix ".paid"
         }
     }
 }
@@ -49,8 +49,8 @@ dependencies {
     compile 'com.android.support:design:25.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.android.support:support-v4:25.0.1'
-    freeCompile 'com.google.firebase:firebase-ads:10.0.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    freeCompile 'com.google.firebase:firebase-ads:10.0.0'
     freeCompile 'com.google.android.gms:play-services:10.0.0'
 }

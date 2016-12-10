@@ -1,8 +1,10 @@
-package com.praveengupta.capstone_project;
+package com.praveengupta.capstone_project.Fragments;
 
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+
+import com.praveengupta.capstone_project.R;
 
 
 public class Settings_fragment extends PreferenceFragment {
