@@ -19,7 +19,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -207,8 +206,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         listView.setEmptyView(findViewById(R.id.empty_view1));
         listView.setAdapter(new BaseAdapter() {
 
-            int margin = (int) getResources().getDimension(R.dimen.activity_vertical_margin);
-
             @Override
             public int getCount() {
                 return lines.size();
@@ -232,13 +229,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     textView = (TextView) v.findViewById(R.id.textview);
                 } else {
                     textView = (TextView) v.findViewById(R.id.textview);
-                    textView.setPadding(margin, 0, margin, 0);
+                    textView.setPadding(0, 0, 0, 0);
                 }
 
                 textView.setText(getItem(i));
-                if (i == 0) textView.setPadding(margin, text_margin, margin, 0);
+                if (i == 0) textView.setPadding(0, text_margin, 0, 0);
                 else if (i == getCount() - 1)
-                    textView.setPadding(margin, 0, margin, text_margin);
+                    textView.setPadding(0, 0, 0, text_margin);
 
                 if (mirror) textView.setRotationX(180);
                 return v;
@@ -253,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onReadyForSpeech(Bundle bundle) {
                 Log.d("kk", "onready");
-                string=lines.get(j).replaceAll("[!-/:-@\\s]", " ").replaceAll(" +", " ").trim();
+                string = lines.get(j).replaceAll("[!-/:-@\\s]", " ").replaceAll(" +", " ").trim();
                 if (progressBar.getVisibility() == View.VISIBLE) {
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(MainActivity.this, "Speak", Toast.LENGTH_SHORT).show();
@@ -298,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onResults(Bundle bundle) {
                 Log.d("kk", "onresult");
-                k=0;
+                k = 0;
                 speechRecognizer.cancel();
                 speechRecognizer.startListening(intent);
             }
@@ -307,10 +304,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             public void onPartialResults(Bundle bundle) {
                 Log.d("kk", "onpartialresult");
                 ArrayList<String> strings = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                Log.d("kk", strings.get(0) + strings.get(0).length() + "\n" + lines.get(j) + (int) lines.get(j).charAt(0));
                 if (strings.get(0).length() >= k + string.length() && strings.get(0).substring(k, k + string.length()).equalsIgnoreCase(string)) {
                     k += string.length() + 1;
                     j++;
-                    string=lines.get(j).replaceAll("[!-/:-@\\s]", " ").replaceAll(" +", " ").trim();
+                    string = lines.get(j).replaceAll("[!-/:-@\\s]", " ").replaceAll(" +", " ").trim();
                     listView.smoothScrollToPositionFromTop(j, text_margin);
                     if (j >= lines.size())
                         onStopScroll();
@@ -336,7 +334,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                         bufferedReader = new BufferedReader(new FileReader(file[0]));
                         String s = "", temp;
                         while ((temp = bufferedReader.readLine()) != null) s += "\n" + temp;
-                        return s.trim();
+                        s=s.trim();
+                        if (s.charAt(0) > 122 | s.charAt(0) < 48)
+                            return s.substring(1);
+                        return s;
                     } catch (IOException e) {
                         Log.d("kk", e.toString());
                     }
@@ -354,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     protected void onResume() {
         super.onResume();
         findViewById(R.id.cover).setMinimumHeight(3 * findViewById(R.id.content).getHeight());
-        textViewWidth = findViewById(R.id.content).getMeasuredWidth();
+        textViewWidth = findViewById(R.id.content).getWidth();
         text_margin = (int) (findViewById(R.id.cover).getY() + (findViewById(R.id.cover).getHeight() - findViewById(R.id.content).getHeight()) / 2);
         scroll_speed = Integer.parseInt(sharedPreferences.getString(getString(R.string.scroll_speed_auto), "-1"));
         if (mirror != sharedPreferences.getBoolean(getString(R.string.mirror_state), false) && listView.getAdapter() != null) {
@@ -391,7 +392,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                                 bufferedReader = new BufferedReader(new FileReader(new File(file[0])));
                                 String s = "", temp;
                                 while ((temp = bufferedReader.readLine()) != null) s += "\n" + temp;
-                                return s.trim();
+                                s=s.trim();
+                                if (s.charAt(0) > 122 | s.charAt(0) < 48)
+                                    return s.substring(1);
+                                return s;
                             } catch (IOException e) {
                                 Log.d("kk", e.toString());
                             }
@@ -534,7 +538,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             indexofwhitespace = indexOf(string, startindex);
             while (textViewWidth >= content.getPaint().measureText(string, startindex, indexofwhitespace)) {
                 indexofwhitespace_pre = indexofwhitespace;
-                if (indexofwhitespace == string.length() || (string.charAt(indexofwhitespace) == '\n' && string.charAt(indexofwhitespace + 1) != '\n'))
+                if (indexofwhitespace == string.length() ||
+                        (string.charAt(indexofwhitespace) == '\n' && string.charAt(indexofwhitespace + 1) != '\n'))
                     break;
                 indexofwhitespace = indexOf(string, indexofwhitespace + 1);
             }
@@ -542,11 +547,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             if (indexofwhitespace_pre < startindex)
                 indexofwhitespace_pre = indexofwhitespace;
             lines.add(string.substring(startindex, indexofwhitespace_pre));
-            Log.d("kk", lines.get(lines.size() - 1));
             startindex = indexofwhitespace_pre + 1;
         }
         ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
-
     }
 
     public int indexOf(String string, int start) {
@@ -557,5 +560,4 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         }
         return string.length();
     }
-
 }

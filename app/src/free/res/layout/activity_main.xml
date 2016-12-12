@@ -28,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
-            android:dividerHeight="0dp" />
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
 
         <TextView
             android:id="@+id/empty_view1"
@@ -38,17 +39,6 @@
             android:text="Oops!!! Nothing Here"
             android:textColor="@color/colorPrimaryDark"
             android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_size"
-            android:visibility="invisible" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -99,6 +89,17 @@
         </LinearLayout>
 
     </android.support.v4.widget.DrawerLayout>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="test"
+        android:textSize="@dimen/text_size"
+        android:visibility="invisible" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
