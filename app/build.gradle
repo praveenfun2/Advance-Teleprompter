@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'praveen_key'
             keyPassword 'Id@nt999'
-            storeFile file("$rootDir/keystore.jks")
+            storeFile file("C:/keystore.jks")
             storePassword '159753'
         }
     }
@@ -14,12 +14,12 @@ android {
     buildToolsVersion "25.0.1"
 
     defaultConfig {
-        applicationId "com.praveengupta.capstone_project"
+        applicationId "com.ex1.praveengupta.capstone_project.paid"
         minSdkVersion 19
         targetSdkVersion 25
         multiDexEnabled true
         versionCode 5
-        versionName "1.4"
+        versionName "1.3.1"
 
     }
     dexOptions {
@@ -30,14 +30,6 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    productFlavors {
-        free {
-
-        }
-        paid {
-            applicationIdSuffix ".paid"
         }
     }
 }
@@ -51,6 +43,6 @@ dependencies {
     compile 'com.android.support:support-v4:25.0.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    freeCompile 'com.google.firebase:firebase-ads:10.0.0'
-    freeCompile 'com.google.android.gms:play-services:10.0.0'
+    compile 'com.google.firebase:firebase-ads:10.0.0'
+    compile 'com.google.android.gms:play-services:10.0.1'
 }

@@ -17,6 +17,8 @@
     <string name="fab_description">options to add content</string>
     <string name="ads_description">google ads</string>
     <string name="help">Help</string>
+    <string name="ad_unit_id">ca-app-pub-9009667005541754/3150896826</string>
+    <string name="ad_unit_id2">ca-app-pub-9009667005541754/7581096427</string>
     <string name="help_text">\u2022 When using speech recognition, try to speak loud &amp; clear.\n\n
     \u2022 \"Write Custom Text\" allows you to manually write the text you want to display. You may also save it to a file for future use.\n\n
     \u2022 \"Choose File\" allows you to import a text file to display its content. Use only \".doc\", \".docx\" or \".txt\" files.\n\n

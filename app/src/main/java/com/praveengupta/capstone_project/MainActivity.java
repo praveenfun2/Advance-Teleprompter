@@ -19,13 +19,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -53,10 +51,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     Toolbar toolbar;
     @BindView(R.id.drawer_list)
     ListView drawer_list;
-    @BindView(R.id.adView)
-    AdView mAdView;
     @BindView(R.id.drawer)
     DrawerLayout drawerLayout;
+    AdView mAdView;
     ActionBarDrawerToggle drawerToggle;
     SpeechRecognizer speechRecognizer;
     ArrayList<String> lines;
@@ -70,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     int j, a;
     int scroll_speed;
     SharedPreferences sharedPreferences;
-    boolean scrolling, auto;
+    boolean mirror, scrolling, auto;
     Intent intent;
     Menu menu;
     int textViewWidth;
@@ -252,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 else if (i == getCount() - 1)
                     textView.setPadding(0, 0, 0, text_margin);
 
+                if (mirror) textView.setRotationX(180);
                 return v;
             }
 
@@ -318,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             public void onPartialResults(Bundle bundle) {
                 Log.d("kk", "onpartialresult");
                 ArrayList<String> strings = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                Log.d("kk", strings.get(0) + strings.get(0).length() + "\n" + lines.get(j) + (int) lines.get(j).charAt(0));
                 if (strings.get(0).length() >= k + string.length() && strings.get(0).substring(k, k + string.length()).equalsIgnoreCase(string)) {
                     k += string.length() + 1;
                     j++;
@@ -366,16 +365,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         MobileAds.initialize(getApplicationContext(), getString(R.string.ad_unit_id));
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         findViewById(R.id.cover).setMinimumHeight(3 * findViewById(R.id.content).getHeight());
-        textViewWidth = findViewById(R.id.content).getMeasuredWidth();
+        textViewWidth = findViewById(R.id.content).getWidth();
         text_margin = (int) (findViewById(R.id.cover).getY() + (findViewById(R.id.cover).getHeight() - findViewById(R.id.content).getHeight()) / 2);
         scroll_speed = Integer.parseInt(sharedPreferences.getString(getString(R.string.scroll_speed_auto), "-1"));
+        if (mirror != sharedPreferences.getBoolean(getString(R.string.mirror_state), false) && listView.getAdapter() != null) {
+            mirror = sharedPreferences.getBoolean(getString(R.string.mirror_state), false);
+            ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
         a = scroll_speed;
         auto = sharedPreferences.getString(getString(R.string.scroll_mode), "auto").equals("auto");
     }
@@ -552,7 +554,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             indexofwhitespace = indexOf(string, startindex);
             while (textViewWidth >= content.getPaint().measureText(string, startindex, indexofwhitespace)) {
                 indexofwhitespace_pre = indexofwhitespace;
-                if (indexofwhitespace == string.length() || (string.charAt(indexofwhitespace) == '\n' && string.charAt(indexofwhitespace + 1) != '\n'))
+                if (indexofwhitespace == string.length() ||
+                        (string.charAt(indexofwhitespace) == '\n' && string.charAt(indexofwhitespace + 1) != '\n'))
                     break;
                 indexofwhitespace = indexOf(string, indexofwhitespace + 1);
             }
@@ -563,7 +566,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             startindex = indexofwhitespace_pre + 1;
         }
         ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
-
     }
 
     public int indexOf(String string, int start) {
