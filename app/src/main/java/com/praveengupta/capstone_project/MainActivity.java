@@ -362,6 +362,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 }
             }.execute(new File(getIntent().getStringExtra("content_add")));
 
+        mAdView= (AdView) findViewById(R.id.adView);
         MobileAds.initialize(getApplicationContext(), getString(R.string.ad_unit_id));
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -395,7 +396,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (resultCode == RESULT_OK)
             switch (requestCode) {
                 case FROM_ADD_TEXT: {
-                    content.setText(data.getStringExtra(getString(R.string.content)));
+                    setList(data.getStringExtra(getString(R.string.content)));
                     break;
                 }
                 case FROM_CHOOSE_FILE: {
@@ -549,6 +550,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     public void setList(String string) {
+        lines.clear();
         int indexofwhitespace_pre = -1, indexofwhitespace = 0, startindex = 0;
         while (startindex < string.length()) {
             indexofwhitespace = indexOf(string, startindex);
